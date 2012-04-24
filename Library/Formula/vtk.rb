@@ -11,6 +11,7 @@ class Vtk < Formula
   def options
   [
     ['--python', "Enable python wrapping."],
+    ['--activetcl', "Build against ActiveTcl"],
     ['--qt', "Enable Qt extension."],
     ['--qt-extern', "Enable Qt extension (via external Qt)"],
     ['--tcl', "Enable Tcl wrapping."],
@@ -67,6 +68,11 @@ class Vtk < Formula
       args << "-DOPENGL_glu_LIBRARY:FILEPATH='/usr/X11R6/lib/libGLU.dylib"
       args << "-DVTK_USE_COCOA:BOOL=OFF"
       args << "-DVTK_USE_X:BOOL=ON"
+    end
+
+    if ARGV.include? '--activetcl'
+      args << "-DTK_INTERNAL_PATH:STRING='/Library/Frameworks/Tk.framework/PrivateHeaders'"
+      args << "-DVTK_USE_X:BOOL=OFF"
     end
 
     # Hack suggested at http://www.vtk.org/pipermail/vtk-developers/2006-February/003983.html
